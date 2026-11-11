@@ -1,0 +1,93 @@
+import { useNavigation } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+
+function FormCadastro() {
+  const [matricula, onChangeMatricula] = useState('');
+  const [email, onChangeEmail] = useState('');
+  const [password, onChangePassword] = useState('');
+  const [mensagemErro, setMensagemErro] = useState('');
+  const navigation = useNavigation();
+  const handleSubmit = () => setMensagemErro('O cadastro ainda não está disponível na API.');
+
+  const navegarParaOutraPagina = () => {
+    navigation.navigate('Entrar');
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Matrícula"
+        value={matricula}
+        onChangeText={onChangeMatricula}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="E-mail"
+        value={email}
+        onChangeText={onChangeEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        value={password}
+        onChangeText={onChangePassword}
+        secureTextEntry
+      />
+      <TouchableOpacity
+        style={[styles.botao, { backgroundColor: 'green' }]}
+        onPress={handleSubmit}
+      >
+        <Text style={{ color: 'white', fontSize: 18 }}>Cadastrar</Text>
+      </TouchableOpacity>
+      {!!mensagemErro && <Text style={styles.erro}>{mensagemErro}</Text>}
+      <View style={styles.divLinks}>
+        <TouchableOpacity onPress={navegarParaOutraPagina}>
+          <Text style={styles.login}>Faça o login</Text>
+        </TouchableOpacity>
+      </View>
+      <StatusBar style="auto" />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    height: 52,
+    width: "70%",
+    marginBottom: 18,
+    borderWidth: 1,
+    padding: 14,
+    borderRadius: 8,
+    borderColor: "brown",
+  },
+  botao: {
+    borderRadius: 7,
+    padding: 14,
+    marginTop: 10,
+  },
+  divLinks: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  login: {
+    paddingTop: 10,
+    color: "green",
+  },
+  erro: {
+    color: 'red',
+    marginTop: 12,
+    textAlign: 'center',
+  },
+});
+
+export default FormCadastro;
